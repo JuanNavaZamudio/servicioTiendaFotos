@@ -8,7 +8,7 @@ using System.Linq;
 namespace service.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("apistore/[controller]")]
     public class ArticlesController : ControllerBase
     {
         [HttpGet]
@@ -18,6 +18,7 @@ namespace service.Controllers
 
             using (var db = new PostContext())
             {
+                db.Database.EnsureCreated();
                 posts = db.Posts.
                             OrderBy(p => p.id).
                             ToList<StorePost>();
@@ -33,6 +34,8 @@ namespace service.Controllers
             Response response = new Response();
             using (var db = new PostContext())
             {
+                db.Database.EnsureCreated();
+
                 foreach (StorePost post in posts)
                 {
                     db.Add(post);
@@ -52,6 +55,8 @@ namespace service.Controllers
             Response response = new Response();
             using (var db = new PostContext())
             {
+                db.Database.EnsureCreated();
+
                 db.Add(post);
                 db.SaveChanges();
 
